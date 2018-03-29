@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="danijela" id="database_initialization">
+        <comment>Initial schema</comment>
+        <createTable tableName="supplier">
+            <column name="ID" type="int(10)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="Name" type="varchar(255)" defaultValue="NULL" encoding="UTF-8">
+                <constraints nullable="true"/>
+            </column>
+            <column name="TaxNumber" type="varchar(20)" defaultValue="NULL">
+                <constraints nullable="true"/>
+            </column>
+            <column name="EmailAddress" type="varchar(100)" defaultValue="NULL" encoding="UTF-8">
+                <constraints nullable="true"/>
+            </column>
+            <column name="WebAddress" type="varchar(100)" defaultValue="NULL">
+                <constraints nullable="true"/>
+            </column>
+            <column name="DayPhone" type="varchar(30)" defaultValue="NULL">
+                <constraints nullable="true"/>
+            </column>
+            <column name="MobilePhone" type="varchar(30)" defaultValue="NULL">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addAutoIncrement catalogName="making_liquibase"
+                          columnDataType="int"
+                          columnName="ID"
+                          incrementBy="1"
+                          schemaName="making_liquibase"
+                          startWith="1"
+                          tableName="supplier"/>
+
+
+
+        <createTable tableName="address_components">
+            <column name="ID" type="int(10)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="PostalCode" type="varchar(20)" defaultValue="NULL">
+                <constraints nullable="true"/>
+            </column>
+            <column name="Country" type="varchar(255)" defaultValue="NULL">
+                <constraints nullable="true"/>
+            </column>
+            <column name="Region" type="varchar(255)" defaultValue="NULL">
+                <constraints nullable="true"/>
+            </column>
+            <column name="City" type="varchar(100)" defaultValue="NULL">
+                <constraints nullable="true"/>
+            </column>
+            <column name="Street" type="varchar(255)" defaultValue="NULL">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+        <addAutoIncrement catalogName="making_liquibase"
+                          columnDataType="int"
+                          columnName="ID"
+                          incrementBy="1"
+                          schemaName="making_liquibase"
+                          startWith="1"
+                          tableName="address_components"/>
+
+        <createTable tableName="product">
+            <column name="ID" type="int(10)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="Name" type="varchar(255)" defaultValue="NULL">
+                <constraints nullable="true"/>
+            </column>
+            <column name="Currency" type="varchar(3)" defaultValue="NULL" encoding="Latin-1">
+                <constraints nullable="true"/>
+            </column>
+            <column name="Latitude" type="double" defaultValue="0">
+                <constraints nullable="true"/>
+            </column>
+            <column name="Longitude" type="double" defaultValue="0">
+                <constraints nullable="true"/>
+            </column>
+            <column name="Phone" type="varchar(50)" defaultValue="NULL">
+                <constraints nullable="true"/>
+            </column>
+            <column name="AddressComponentsID" type="int(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SupplierID" type="int(10)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addAutoIncrement catalogName="making_liquibase"
+                          columnDataType="int"
+                          columnName="ID"
+                          incrementBy="2"
+                          schemaName="making_liquibase"
+                          startWith="1"
+                          tableName="product"/>
+        <addForeignKeyConstraint constraintName="fk_address_components_id"
+                                 baseTableName="product"
+                                 baseColumnNames="AddressComponentsID"
+                                 referencedTableName="address_components"
+                                 referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="fk_supplierid"
+                                 baseTableName="product"
+                                 baseColumnNames="SupplierID"
+                                 referencedTableName="supplier"
+                                 referencedColumnNames="ID"/>
+        <createIndex tableName="product" indexName="product_supplier_id">
+            <column name="SupplierID"/>
+        </createIndex>
+        <createIndex tableName="product" indexName="fk_address_components_id_idx">
+            <column name="AddressComponentsID"/>
+        </createIndex>
+
+        <createTable tableName="image">
+            <column name="ID" type="int(10)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)" defaultValue="NULL">
+                <constraints nullable="true"/>
+            </column>
+            <column name="url" type="varchar(512)" defaultValue="NULL">
+                <constraints nullable="true"/>
+            </column>
+            <column name="product_id" type="int(10)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addAutoIncrement catalogName="making_liquibase"
+                          columnDataType="int"
+                          columnName="ID"
+                          incrementBy="3"
+                          schemaName="making_liquibase"
+                          startWith="1"
+                          tableName="image"/>
+        <addForeignKeyConstraint constraintName="fk_product_id"
+                                 baseTableName="image"
+                                 baseColumnNames="product_id"
+                                 referencedTableName="product"
+                                 referencedColumnNames="ID"/>
+
+        <createIndex tableName="image" indexName="PRODUCT">
+            <column name="product_id"/>
+        </createIndex>
+
+
+    </changeSet>
+</databaseChangeLog>

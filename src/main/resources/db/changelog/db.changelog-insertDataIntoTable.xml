@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="data_initialization" author="danijela">
+        <insert tableName="supplier">
+            <column name="ID" value="1"/>
+            <column name="Name" value="Sunsational Beach Rentals"/>
+            <column name="TaxNumber" value="NULL"/>
+            <column name="EmailAddress" value="anita@sunsational.com"/>
+            <column name="WebAddress" value="www.sunsational.com"/>
+            <column name="DayPhone" value="+17273671991"/>
+            <column name="MobilePhone" value="NULL"/>
+        </insert>
+
+        <insert tableName="address_components">
+            <column name="ID" value="1"/>
+            <column name="PostalCode" value="33706"/>
+            <column name="Country" value="US"/>
+            <column name="Region" value="Florida"/>
+            <column name="City" value="Treasure Island"/>
+            <column name="Street" value="11360 Gulf Blvd."/>
+        </insert>
+
+        <insert tableName="product">
+            <column name="ID" value="1"/>
+            <column name="SupplierID" value="1"/>
+            <column name="Name" value="South Beach Condo Hotel"/>
+            <column name="Currency" value="USD"/>
+            <column name="Latitude" value="27.7729684"/>
+            <column name="Longitude" value="-82.7737742"/>
+            <column name="AddressComponentsID" value="1"/>
+            <column name="Phone" value="727-367-1991"/>
+        </insert>
+
+        <insert tableName="image">
+            <column name="ID" value="1"/>
+            <column name="product_id" value="1"/>
+            <column name="name" value="SB1.jpg"/>
+            <column name="url" value="https://s3.amazonaws.com/mybookingpal/pictures/nopms/nopms/1234760135/A857B85D3765714351AF415A5710777F"/>
+        </insert>
+
+        <insert tableName="image">
+            <column name="ID" value="2"/>
+            <column name="product_id" value="1"/>
+            <column name="name" value="Hammocks.jpg"/>
+            <column name="url" value="https://s3.amazonaws.com/mybookingpal/pictures/nopms/nopms/1234760135/7378EF9A6E98DCA74B601A5ECB0A0635"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
